@@ -4,8 +4,12 @@ export const SITE = {
   description: 'Hardware, firmware and software projects — and notes written along the way.',
   url: 'https://eran-yadin.github.io',
   github: 'https://github.com/eran-yadin',
-  // Add more links here, e.g. linkedin: 'https://www.linkedin.com/in/...'
-  links: [{ label: 'GitHub', href: 'https://github.com/eran-yadin' }],
+  linkedin: 'https://www.linkedin.com/in/eran-yadin-b64a34270/',
+  // Shown in the footer, the About page and the home page buttons
+  links: [
+    { label: 'GitHub', href: 'https://github.com/eran-yadin' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/eran-yadin-b64a34270/' },
+  ],
 };
 
 export const NAV = [
