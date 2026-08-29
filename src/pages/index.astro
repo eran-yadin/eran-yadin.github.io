@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import PostItem from '../components/PostItem.astro';
+import { getNotes, getProjects } from '../lib/content';
+import { SITE } from '../site';
+
+const projects = await getProjects();
+const featured = projects.filter((p) => p.data.featured).slice(0, 3);
+const notes = (await getNotes()).slice(0, 5);
+---
+<Base>
+  <section class="hero">
+    <div>
+      <p class="eyebrow">Hardware · Firmware · Software</p>
+      <h1>Hi, I'm Eran.</h1>
+      <p class="lede">
+        I build things with electronics, firmware and code — from CAN-bus bridges for old tractors to FPGA
+        calculators and small tools that make my own workflow faster. This site is where I document the
+        projects and keep the notes I write along the way.
+      </p>
+      <p style="display:flex; gap:.6rem; flex-wrap:wrap; margin-top:1.5rem">
+        <a class="button primary" href="/projects/">See the projects</a>
+        <a class="button" href={SITE.github} rel="me noopener">GitHub</a>
+      </p>
+    </div>
+    <img src="/goose.png" alt="A goose holding a wrench — the site mascot" width="180" height="182" />
+  </section>
+
+  {featured.length > 0 && (
+    <section class="section">
+      <div class="section-head">
+        <h2>Featured projects</h2>
+        <a href="/projects/">All projects →</a>
+      </div>
+      <div class="grid">
+        {featured.map((p) => <ProjectCard project={p} />)}
+      </div>
+    </section>
+  )}
+
+  {notes.length > 0 && (
+    <section class="section">
+      <div class="section-head">
+        <h2>Recently tended notes</h2>
+        <a href="/notes/">All notes →</a>
+      </div>
+      <div class="list">
+        {notes.map((n) => <PostItem post={n} />)}
+      </div>
+    </section>
+  )}
+</Base>

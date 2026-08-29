@@ -1,0 +1,16 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../site';
+import { titleFromId } from '../lib/content';
+interface Props { post: CollectionEntry<'notes'> }
+const { post } = Astro.props;
+const { description, date } = post.data;
+const title = post.data.title ?? titleFromId(post.id);
+---
+<div class="list-item">
+  <time datetime={date.toISOString()}>{formatDate(date)}</time>
+  <div>
+    <a href={`/notes/${post.id}/`}>{title}</a>
+    {description && <p>{description}</p>}
+  </div>
+</div>

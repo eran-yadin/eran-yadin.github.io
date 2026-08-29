@@ -1,0 +1,49 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getProjects } from '../../lib/content';
+
+const projects = await getProjects();
+const tagCounts = new Map<string, number>();
+for (const p of projects) for (const t of p.data.tags) tagCounts.set(t, (tagCounts.get(t) ?? 0) + 1);
+const tags = [...tagCounts].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([t]) => t);
+---
+<Base title="Projects" description="Hardware, firmware and software projects by Eran Yadin.">
+  <p class="eyebrow">Projects</p>
+  <h1>Things I've built</h1>
+  <p class="lede">Hardware, firmware, software and the occasional course project. Filter by topic:</p>
+
+  <div class="filters" role="group" aria-label="Filter projects by tag">
+    <button type="button" data-tag="" aria-pressed="true">All</button>
+    {tags.map((t) => <button type="button" data-tag={t} aria-pressed="false">{t}</button>)}
+  </div>
+
+  <div class="grid" id="project-grid">
+    {projects.map((p) => <ProjectCard project={p} />)}
+  </div>
+  <p id="no-results" hidden class="lede" style="margin-top:2rem">Nothing tagged with that yet.</p>
+</Base>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filters button');
+  const cards = document.querySelectorAll<HTMLElement>('#project-grid .card');
+  const empty = document.getElementById('no-results')!;
+
+  function apply(tag: string) {
+    let shown = 0;
+    cards.forEach((c) => {
+      const has = !tag || (c.dataset.tags ?? '').split(',').includes(tag);
+      c.hidden = !has;
+      if (has) shown++;
+    });
+    empty.hidden = shown > 0;
+    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.tag === tag)));
+    const url = new URL(location.href);
+    if (tag) url.searchParams.set('tag', tag); else url.searchParams.delete('tag');
+    history.replaceState(null, '', url);
+  }
+
+  buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.tag ?? '')));
+  const initial = new URL(location.href).searchParams.get('tag') ?? '';
+  if (initial) apply(initial);
+</script>

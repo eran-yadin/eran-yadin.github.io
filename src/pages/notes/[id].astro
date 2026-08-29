@@ -1,0 +1,39 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Backlinks from '../../components/Backlinks.astro';
+import { getNotes, getBacklinks, hrefOf, stageIcon, titleFromId } from '../../lib/content';
+import { formatDate } from '../../site';
+
+export async function getStaticPaths() {
+  const notes = await getNotes();
+  const backlinks = await getBacklinks();
+  return notes.map((note) => ({
+    params: { id: note.id },
+    props: { note, backlinks: backlinks.get(hrefOf(note)) ?? [] },
+  }));
+}
+
+const { note, backlinks } = Astro.props;
+const { description, date, updated, tags, stage } = note.data;
+const title = note.data.title ?? titleFromId(note.id);
+const { Content } = await render(note);
+---
+<Base title={title} description={description} type="article">
+  <header class="article-head">
+    <p class="eyebrow">Note {stage && <span title={stage}>{stageIcon(stage)} {stage}</span>}</p>
+    <h1>{title}</h1>
+    {description && <p class="lede">{description}</p>}
+    <div class="meta">
+      <span>Planted <time datetime={date.toISOString()}>{formatDate(date)}</time></span>
+      {updated && <span>· Last tended <time datetime={updated.toISOString()}>{formatDate(updated)}</time></span>}
+    </div>
+    {tags.length > 0 && <div class="tags" style="margin-top:.8rem">{tags.map((t) => <a class="tag" href={`/tags/${t}/`}>{t}</a>)}</div>}
+  </header>
+
+  <article class="prose">
+    <Content />
+  </article>
+
+  <Backlinks links={backlinks} />
+</Base>

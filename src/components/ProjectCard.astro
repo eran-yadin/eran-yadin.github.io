@@ -1,0 +1,18 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../site';
+interface Props { project: CollectionEntry<'projects'> }
+const { project } = Astro.props;
+const { title, description, tags, status, date } = project.data;
+---
+<article class="card" data-tags={tags.join(',')}>
+  <div class="meta">
+    <span class="badge" data-status={status}>{status}</span>
+    <time datetime={date.toISOString()}>{formatDate(date)}</time>
+  </div>
+  <h3><a href={`/projects/${project.id}/`}>{title}</a></h3>
+  <p>{description}</p>
+  <div class="foot">
+    <div class="tags">{tags.map((t) => <span class="tag">{t}</span>)}</div>
+  </div>
+</article>

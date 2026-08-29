@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getNotes, getTags, tended, stageIcon, titleFromId } from '../../lib/content';
+import { formatDate } from '../../site';
+
+const notes = await getNotes();
+const tags = await getTags();
+---
+<Base title="Notes" description="Notes, build logs and essays by Eran Yadin — a digital garden tended over time.">
+  <p class="eyebrow">Notes</p>
+  <h1>A garden, not a feed</h1>
+  <p class="lede">
+    Notes here grow over time: some are seedlings 🌱, some are budding 🌿, a few are evergreen 🌳.
+    Each one shows when it was planted and last tended. Sorted by most recently tended.
+  </p>
+
+  {tags.size > 0 && (
+    <div class="tags" style="margin:1rem 0 2rem">
+      {[...tags].map(([t, n]) => <a class="tag" href={`/tags/${t}/`}>{t} · {n}</a>)}
+    </div>
+  )}
+
+  <div class="list">
+    {notes.map((n) => (
+      <div class="list-item">
+        <time datetime={tended(n).toISOString()}>{formatDate(tended(n))}</time>
+        <div>
+          <a href={`/notes/${n.id}/`}>{stageIcon(n.data.stage)} {n.data.title ?? titleFromId(n.id)}</a>
+          {n.data.draft && <span class="badge" style="margin-left:.5rem">draft</span>}
+          {n.data.description && <p>{n.data.description}</p>}
+        </div>
+      </div>
+    ))}
+  </div>
+  {notes.length === 0 && <p class="lede">Nothing planted yet.</p>}
+</Base>

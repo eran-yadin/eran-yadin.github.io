@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site';
+---
+<Base title="About" description="About Eran Yadin.">
+  <p class="eyebrow">About</p>
+  <h1>Eran Yadin</h1>
+  <div class="prose">
+    <p>
+      I'm an engineer who likes the whole stack from copper to code: designing boards in KiCad, writing
+      firmware for the microcontroller on them, and building the software that talks to it. I run a small
+      home lab, draw a bit, and keep most of my thinking in an Obsidian vault — parts of which end up here as
+      <a href="/notes/">notes</a>.
+    </p>
+    <p>
+      Current focus: <a href="/projects/open-tractor-can/">Open Tractor CAN</a> — open hardware and software
+      to connect older tractors to modern ag tech.
+    </p>
+
+    <h2>Elsewhere</h2>
+    <ul>
+      {SITE.links.map((l) => <li><a href={l.href} rel="me noopener">{l.label}</a></li>)}
+    </ul>
+
+    <h2>This site</h2>
+    <p>
+      Built with <a href="https://astro.build" rel="noopener">Astro</a>, written in Markdown straight from
+      Obsidian, hosted on GitHub Pages. No trackers, no cookies, no JavaScript except the theme toggle and
+      the project filter. The goose has been the mascot since the first version of this site.
+    </p>
+  </div>
+</Base>

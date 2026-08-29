@@ -1,0 +1,23 @@
+---
+import { hrefOf, titleFromId, type Entry } from '../lib/content';
+interface Props { links: Entry[] }
+const { links } = Astro.props;
+---
+{links.length > 0 && (
+  <aside class="backlinks">
+    <p class="eyebrow">Linked from</p>
+    <ul>
+      {links.map((e) => (
+        <li>
+          <a href={hrefOf(e)}>{e.data.title ?? titleFromId(e.id)}</a>
+          <span class="kind">{e.collection === 'projects' ? 'project' : 'note'}</span>
+        </li>
+      ))}
+    </ul>
+  </aside>
+)}
+<style>
+  .backlinks { max-width: 46rem; margin-top: 3rem; padding: 1rem 1.2rem; border: 1px dashed var(--border); border-radius: var(--radius); }
+  .backlinks ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.3rem; }
+  .kind { color: var(--muted); font-size: 0.8rem; margin-left: 0.5rem; }
+</style>
