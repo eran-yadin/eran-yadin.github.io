@@ -8,8 +8,7 @@ repo: https://github.com/eran-yadin/fourier_signal_app
 featured: true
 ---
 
-A small web app (runs locally at `localhost:8501`) for signals-and-systems work: you type an expression such
-as `exp(-2*t)*u(t)`, pick a transform, and get the closed-form result plus magnitude and phase plots.
+A small web app (runs locally at `localhost:8501`) for signals-and-systems work: you type an expression such as `exp(-2*t)*u(t)`, pick a transform, and get the closed-form result plus magnitude and phase plots.
 
 | | forward | inverse |
 |---|---|---|
@@ -19,15 +18,11 @@ as `exp(-2*t)*u(t)`, pick a transform, and get the closed-form result plus magni
 
 ## Setup
 
-Needs Python 3.10+ and nothing else — `setup.bat` / `setup.sh` builds a private `.venv` inside the project
-folder, `run.bat` / `run.sh` starts the app. There is also a `docker` branch: `docker compose up`, no Python needed.
+Needs Python 3.10+ and nothing else — `setup.bat` / `setup.sh` builds a private `.venv` inside the project folder, `run.bat` / `run.sh` starts the app. There is also a `docker` branch: `docker compose up`, no Python needed.
 
 ## The "from a picture" panel
 
-Optional: paste a screenshot or a photo of a handwritten equation and it gets transcribed into the input box.
-Reading handwriting is a machine-learning problem, so this one panel calls a vision model (bring your own API
-key). It does *only* the transcription — nothing is plotted or computed by the model, and it always shows what
-it read and waits for confirmation before anything is evaluated.
+Optional: paste a screenshot or a photo of a handwritten equation and it gets transcribed into the input box. Reading handwriting is a machine-learning problem, so this one panel calls a vision model (bring your own API key). It does *only* the transcription — nothing is plotted or computed by the model, and it always shows what it read and waits for confirmation before anything is evaluated.
 
 > [!note]
 > The core install has no AI dependency, no API key and no account. Without the optional panel it simply says it's off.

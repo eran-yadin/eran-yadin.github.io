@@ -7,29 +7,21 @@ status: research
 featured: true
 ---
 
-Modern ag tech — GPS guidance, telemetry, ISOBUS implements, phone apps — assumes a modern tractor.
-Millions of working tractors from the 1990s–2010s have CAN buses (J1939 / ISOBUS / proprietary) that are
-locked behind dealer tools, and older tractors have no bus at all. This project aims to change that.
+Modern ag tech — GPS guidance, telemetry, ISOBUS implements, phone apps — assumes a modern tractor. Millions of working tractors from the 1990s–2010s have CAN buses (J1939 / ISOBUS / proprietary) that are locked behind dealer tools, and older tractors have no bus at all. This project aims to change that.
 
 ## Goals
 
-- **Read** — pull live data (engine RPM, speed, PTO, hitch, fuel, temperatures, fault codes) off an old
-  tractor's CAN bus, or off add-on sensors on pre-CAN tractors.
-- **Write** — send data *into* the tractor's world: act as an ISOBUS Tractor ECU so a modern implement gets
-  ground speed / PTO / hitch info from an old tractor, or feed guidance and section-control data to a cab display.
-- **Bridge** — expose all of that over BLE / Wi-Fi / USB / SocketCAN so phones, laptops, AgOpenGPS and
-  farm-management software can use it.
-- **Document** — build an open, community-maintained database of tractor CAN message definitions (DBC files)
-  per make / model / year.
+- **Read** — pull live data (engine RPM, speed, PTO, hitch, fuel, temperatures, fault codes) off an old tractor's CAN bus, or off add-on sensors on pre-CAN tractors.
+- **Write** — send data *into* the tractor's world: act as an ISOBUS Tractor ECU so a modern implement gets ground speed / PTO / hitch info from an old tractor, or feed guidance and section-control data to a cab display.
+- **Bridge** — expose all of that over BLE / Wi-Fi / USB / SocketCAN so phones, laptops, AgOpenGPS and farm-management software can use it.
+- **Document** — build an open, community-maintained database of tractor CAN message definitions (DBC files) per make / model / year.
 
 ## Status
 
-**Phase 0 — research.** Protocols, existing projects and candidate hardware have been surveyed; the next step
-is picking a target tractor to capture real bus traffic from.
+**Phase 0 — research.** Protocols, existing projects and candidate hardware have been surveyed; the next step is picking a target tractor to capture real bus traffic from.
 
 > [!warning] Safety first
-> A tractor is a multi-tonne machine. Anything that *writes* to the bus is done in listen-only mode first,
-> then in the shop with the wheels chocked, and never in the field until proven.
+> A tractor is a multi-tonne machine. Anything that *writes* to the bus is done in listen-only mode first, then in the shop with the wheels chocked, and never in the field until proven.
 
 ## Planned layout
 
@@ -43,6 +35,4 @@ is picking a target tractor to capture real bus traffic from.
 
 ## Licensing
 
-Everything is meant to be reusable by anyone: hardware under CERN-OHL-S, firmware and software under GPL-3.0,
-data and docs under CC-BY-SA-4.0. If you have a tractor with a CAN bus and a laptop, you can contribute by
-capturing and sharing a log.
+Everything is meant to be reusable by anyone: hardware under CERN-OHL-S, firmware and software under GPL-3.0, data and docs under CC-BY-SA-4.0. If you have a tractor with a CAN bus and a laptop, you can contribute by capturing and sharing a log.

@@ -7,9 +7,7 @@ status: done
 repo: https://github.com/eran-yadin/EasyCharge
 ---
 
-Written for a college systems-programming course. It runs as a menu-driven console app over a plain-text
-database and covers the life of a charging session: find the nearest station, put a car on a port, check on
-it, stop the charge and bill it.
+Written for a college systems-programming course. It runs as a menu-driven console app over a plain-text database and covers the life of a charging session: find the nearest station, put a car on a port, check on it, stop the charge and bill it.
 
 Behind the menu sit the data structures the course was actually about:
 
@@ -19,8 +17,7 @@ Behind the menu sit the data structures the course was actually about:
 
 ## The database
 
-Four CSV-style text files, read at the top of every menu iteration and rewritten after it, so the on-disk
-state is always current.
+Four CSV-style text files, read at the top of every menu iteration and rewritten after it, so the on-disk state is always current.
 
 | file | row |
 |---|---|
@@ -31,6 +28,4 @@ state is always current.
 
 ## Build
 
-The repository is a Visual Studio 2022 solution (`app.sln`) — open and build. On Linux/macOS it needs two small
-fixes (a missing `<errno.h>` include and an integer-as-pointer sentinel that GCC 14+ rejects); with those it
-compiles with `gcc -std=c11`. Run it from `app/`, since the data files are opened by relative path.
+The repository is a Visual Studio 2022 solution (`app.sln`) — open and build. On Linux/macOS it needs two small fixes (a missing `<errno.h>` include and an integer-as-pointer sentinel that GCC 14+ rejects); with those it compiles with `gcc -std=c11`. Run it from `app/`, since the data files are opened by relative path.

@@ -11,11 +11,9 @@ featured: false
 draft: true             # remove (or set false) to publish
 ---
 
-Copy this file, rename it (the file name becomes the URL: `my-board.md` → `/projects/my-board/`),
-and delete the leading underscore. Files starting with `_` are ignored.
+Copy this file, rename it (the file name becomes the URL: `my-board.md` → `/projects/my-board/`), and delete the leading underscore. Files starting with `_` are ignored.
 
-Obsidian syntax works as-is: `[[Some note]]`, `![[photo.png]]` (put the image next to this file
-or in an `attachments/` folder here), and callouts:
+Obsidian syntax works as-is: `[[Some note]]`, `![[photo.png]]` (put the image next to this file or in an `attachments/` folder here), and callouts:
 
 > [!note] Title
 > Body text.

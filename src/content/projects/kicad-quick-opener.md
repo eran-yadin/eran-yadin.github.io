@@ -8,16 +8,13 @@ repo: https://github.com/eran-yadin/KiCadQuickOpener
 featured: true
 ---
 
-I open a lot of KiCad projects. Digging through folders for the right `.kicad_pro` every time was slow, so
-this plugin for [Flow Launcher](https://www.flowlauncher.com/) makes it a keystroke: type a keyword, get a
-list of matching projects, hit Enter.
+I open a lot of KiCad projects. Digging through folders for the right `.kicad_pro` every time was slow, so this plugin for [Flow Launcher](https://www.flowlauncher.com/) makes it a keystroke: type a keyword, get a list of matching projects, hit Enter.
 
 ## Features
 
 - **Fast** — built-in Python only; no external dependencies or SDKs.
 - **Smart search** — finds `.kicad_pro` files across your project directories by keyword.
-- **Drill-down** — <kbd>Shift</kbd>+<kbd>Enter</kbd> on a project reveals its layouts (`.kicad_pcb`),
-  schematics (`.kicad_sch` / `.sch`), or opens the project folder in Explorer.
+- **Drill-down** — <kbd>Shift</kbd>+<kbd>Enter</kbd> on a project reveals its layouts (`.kicad_pcb`), schematics (`.kicad_sch` / `.sch`), or opens the project folder in Explorer.
 
 ## Installation
 

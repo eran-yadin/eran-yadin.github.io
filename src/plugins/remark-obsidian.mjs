@@ -5,8 +5,12 @@
  *   [[Some Post|shown text]]   -> same, custom text
  *   [[Some Post#Heading]]      -> same, with #heading anchor
  *   [[projects/foo]]           -> explicit collection
- *   ![[image.png]]             -> <img src="./image.png">   (file next to the .md, or in attachments/)
- *   ![[attachments/a.png]]     -> <img src="./attachments/a.png">
+ *   ![[image.png]]             -> <img src="./image.png"> — if the file isn't next to the .md,
+ *                                 ./attachments/image.png is tried (Obsidian's attachment folder)
+ *   ![[image.png|422]]         -> Obsidian size spec (|W or |WxH) becomes width/height, not alt text
+ *
+ * Math nodes ($…$ / $$…$$, parsed by remark-math) get invisible unicode stripped so KaTeX
+ * doesn't choke on characters Obsidian lets through (zero-width space, unicode minus).
  *
  * Unresolved links fall back to /posts/<slug>/ so a build never breaks on a dangling link.
  * Callouts (> [!note]) are handled separately by rehype-callouts.
@@ -16,6 +20,7 @@ import path from 'node:path';
 
 const WIKI = /(!?)\[\[([^\]|#]+?)(?:#([^\]|]+))?(?:\|([^\]]+))?\]\]/g;
 const IMAGE_EXT = /\.(png|jpe?g|gif|webp|avif|svg)$/i;
+const SIZE_SPEC = /^\d+(?:x\d+)?$/;
 const CONTENT_DIR = path.resolve('src/content');
 const COLLECTIONS = ['posts', 'projects'];
 
@@ -94,8 +99,37 @@ function displayText(target, heading, alias) {
   return heading ? `${base} › ${heading.trim()}` : base;
 }
 
+function imageNode(target, alias, dir) {
+  const file = target.trim();
+  // Obsidian's |422 / |600x400 size specs (possibly several segments) vs a real alt text
+  let width, height;
+  const altParts = [];
+  for (const part of (alias ?? '').split('|')) {
+    const p = part.trim();
+    if (!p) continue;
+    if (SIZE_SPEC.test(p)) {
+      if (width === undefined) [width, height] = p.split('x');
+    } else altParts.push(p);
+  }
+  let rel = file;
+  if (!rel.startsWith('.') && !rel.startsWith('/')) {
+    // Obsidian resolves attachments vault-wide; we try next to the .md, then ./attachments/
+    if (dir && !fs.existsSync(path.join(dir, rel)) && fs.existsSync(path.join(dir, 'attachments', rel))) {
+      rel = `attachments/${rel}`;
+    }
+    rel = `./${rel}`;
+  }
+  const node = {
+    type: 'image',
+    url: rel,
+    alt: altParts.join(' ') || file.replace(/^.*\//, '').replace(IMAGE_EXT, ''),
+  };
+  if (width) node.data = { hProperties: { width, ...(height ? { height } : {}) } };
+  return node;
+}
+
 /* ---------- AST transform ---------- */
-function splitText(node) {
+function splitText(node, dir) {
   const out = [];
   let last = 0;
   const text = node.value;
@@ -103,9 +137,7 @@ function splitText(node) {
     const [full, bang, target, heading, alias] = m;
     if (m.index > last) out.push({ type: 'text', value: text.slice(last, m.index) });
     if (bang === '!' && IMAGE_EXT.test(target.trim())) {
-      const file = target.trim();
-      const url = file.startsWith('.') || file.startsWith('/') ? file : `./${file}`;
-      out.push({ type: 'image', url, alt: alias ?? file.replace(/^.*\//, '').replace(IMAGE_EXT, '') });
+      out.push(imageNode(target, alias, dir));
     } else {
       out.push({
         type: 'link',
@@ -119,16 +151,21 @@ function splitText(node) {
   return out;
 }
 
-function walk(node) {
+function walk(node, dir) {
+  if (node.type === 'math' || node.type === 'inlineMath') {
+    // strip characters KaTeX rejects: zero-width space/joiner/BOM; unicode minus -> ASCII
+    node.value = node.value.replace(/[​‌‍﻿]/g, '').replace(/−/g, '-');
+    return;
+  }
   if (!node.children) return;
   const next = [];
   for (const child of node.children) {
     WIKI.lastIndex = 0;
     if (child.type === 'text' && WIKI.test(child.value)) {
       WIKI.lastIndex = 0;
-      next.push(...splitText(child));
+      next.push(...splitText(child, dir));
     } else {
-      if (child.type !== 'code' && child.type !== 'inlineCode') walk(child);
+      if (child.type !== 'code' && child.type !== 'inlineCode') walk(child, dir);
       next.push(child);
     }
   }
@@ -137,5 +174,8 @@ function walk(node) {
 
 export default function remarkObsidian() {
   index = null; // rebuild the index on each (re)start so new files are picked up
-  return (tree) => walk(tree);
+  return (tree, file) => {
+    const dir = file?.path ? path.dirname(file.path) : null;
+    walk(tree, dir);
+  };
 }

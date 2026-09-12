@@ -7,8 +7,7 @@ tags: [topic]
 draft: true               # remove (or set false) to publish
 ---
 
-Copy this file, rename it (the file name becomes the URL: `my-post.md` → `/posts/my-post/`),
-and delete the leading underscore. Files starting with `_` are ignored.
+Copy this file, rename it (the file name becomes the URL: `my-post.md` → `/posts/my-post/`), and delete the leading underscore. Files starting with `_` are ignored.
 
 Obsidian syntax works as-is:
 
