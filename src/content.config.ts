@@ -2,8 +2,8 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 // Files starting with "_" are ignored (use them for templates / private drafts).
-const notes = defineCollection({
-  loader: glob({ pattern: '**/[^_]*.md', base: './src/content/notes' }),
+const posts = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.md', base: './src/content/posts' }),
   schema: ({ image }) =>
     z.object({
       title: z.string().optional(), // defaults to the file name, like Obsidian
@@ -34,4 +34,4 @@ const projects = defineCollection({
     }),
 });
 
-export const collections = { notes, projects };
+export const collections = { posts, projects };

@@ -2,12 +2,12 @@
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import PostItem from '../components/PostItem.astro';
-import { getNotes, getProjects } from '../lib/content';
+import { getPosts, getProjects } from '../lib/content';
 import { SITE } from '../site';
 
 const projects = await getProjects();
 const featured = projects.filter((p) => p.data.featured).slice(0, 3);
-const notes = (await getNotes()).slice(0, 5);
+const posts = (await getPosts()).slice(0, 5);
 ---
 <Base>
   <section class="hero">
@@ -17,7 +17,7 @@ const notes = (await getNotes()).slice(0, 5);
       <p class="lede">
         I build things with electronics, firmware and code — from CAN-bus bridges for old tractors to FPGA
         calculators and small tools that make my own workflow faster. This site is where I document the
-        projects and keep the notes I write along the way.
+        projects and write the occasional blog post along the way.
       </p>
       <p style="display:flex; gap:.6rem; flex-wrap:wrap; margin-top:1.5rem">
         <a class="button primary" href="/projects/">See the projects</a>
@@ -40,14 +40,14 @@ const notes = (await getNotes()).slice(0, 5);
     </section>
   )}
 
-  {notes.length > 0 && (
+  {posts.length > 0 && (
     <section class="section">
       <div class="section-head">
-        <h2>Recently tended notes</h2>
-        <a href="/notes/">All notes →</a>
+        <h2>Latest posts</h2>
+        <a href="/posts/">All posts →</a>
       </div>
       <div class="list">
-        {notes.map((n) => <PostItem post={n} />)}
+        {posts.map((p) => <PostItem post={p} />)}
       </div>
     </section>
   )}

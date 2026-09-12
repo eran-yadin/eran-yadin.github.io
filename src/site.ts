@@ -1,7 +1,7 @@
 export const SITE = {
   name: 'Eran Yadin',
   title: 'Eran Yadin',
-  description: 'Hardware, firmware and software projects — and notes written along the way.',
+  description: 'Hardware, firmware and software projects — and blog posts written along the way.',
   url: 'https://eran-yadin.github.io',
   github: 'https://github.com/eran-yadin',
   linkedin: 'https://www.linkedin.com/in/eran-yadin-b64a34270/',
@@ -14,7 +14,7 @@ export const SITE = {
 
 export const NAV = [
   { label: 'Projects', href: '/projects/' },
-  { label: 'Notes', href: '/notes/' },
+  { label: 'Posts', href: '/posts/' },
   { label: 'About', href: '/about/' },
 ];
 

@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getPosts, getTags, tended, titleFromId } from '../../lib/content';
+import { formatDate } from '../../site';
+
+const posts = await getPosts();
+const tags = await getTags();
+---
+<Base title="Posts" description="Blog posts, build logs and write-ups by Eran Yadin.">
+  <p class="eyebrow">Posts</p>
+  <h1>The blog</h1>
+  <p class="lede">
+    Write-ups of things I built, analysed or figured out. Sorted by most recently updated.
+  </p>
+
+  {tags.size > 0 && (
+    <div class="tags" style="margin:1rem 0 2rem">
+      {[...tags].map(([t, n]) => <a class="tag" href={`/tags/${t}/`}>{t} · {n}</a>)}
+    </div>
+  )}
+
+  <div class="list">
+    {posts.map((p) => (
+      <div class="list-item">
+        <time datetime={tended(p).toISOString()}>{formatDate(tended(p))}</time>
+        <div>
+          <a href={`/posts/${p.id}/`}>{p.data.title ?? titleFromId(p.id)}</a>
+          {p.data.draft && <span class="badge" style="margin-left:.5rem">draft</span>}
+          {p.data.description && <p>{p.data.description}</p>}
+        </div>
+      </div>
+    ))}
+  </div>
+  {posts.length === 0 && <p class="lede">Nothing published yet.</p>}
+</Base>

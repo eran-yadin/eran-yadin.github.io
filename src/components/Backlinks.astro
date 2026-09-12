@@ -10,7 +10,7 @@ const { links } = Astro.props;
       {links.map((e) => (
         <li>
           <a href={hrefOf(e)}>{e.data.title ?? titleFromId(e.id)}</a>
-          <span class="kind">{e.collection === 'projects' ? 'project' : 'note'}</span>
+          <span class="kind">{e.collection === 'projects' ? 'project' : 'post'}</span>
         </li>
       ))}
     </ul>

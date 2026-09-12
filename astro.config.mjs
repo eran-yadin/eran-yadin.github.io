@@ -7,6 +7,11 @@ import remarkObsidian from './src/plugins/remark-obsidian.mjs';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://eran-yadin.github.io',
+  // The blog lived at /notes/ for the first two weeks — keep old links working.
+  redirects: {
+    '/notes': '/posts',
+    '/notes/[id]': '/posts/[id]',
+  },
   trailingSlash: 'ignore',
   integrations: [sitemap()],
   markdown: {

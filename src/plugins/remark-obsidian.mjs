@@ -1,14 +1,14 @@
 /**
  * remark plugin: makes Obsidian-flavoured Markdown work as-is.
  *
- *   [[Some Note]]              -> link to that note (matched by title or file name, any collection)
- *   [[Some Note|shown text]]   -> same, custom text
- *   [[Some Note#Heading]]      -> same, with #heading anchor
+ *   [[Some Post]]              -> link to that post (matched by title or file name, any collection)
+ *   [[Some Post|shown text]]   -> same, custom text
+ *   [[Some Post#Heading]]      -> same, with #heading anchor
  *   [[projects/foo]]           -> explicit collection
  *   ![[image.png]]             -> <img src="./image.png">   (file next to the .md, or in attachments/)
  *   ![[attachments/a.png]]     -> <img src="./attachments/a.png">
  *
- * Unresolved links fall back to /notes/<slug>/ so a build never breaks on a dangling link.
+ * Unresolved links fall back to /posts/<slug>/ so a build never breaks on a dangling link.
  * Callouts (> [!note]) are handled separately by rehype-callouts.
  */
 import fs from 'node:fs';
@@ -17,7 +17,7 @@ import path from 'node:path';
 const WIKI = /(!?)\[\[([^\]|#]+?)(?:#([^\]|]+))?(?:\|([^\]]+))?\]\]/g;
 const IMAGE_EXT = /\.(png|jpe?g|gif|webp|avif|svg)$/i;
 const CONTENT_DIR = path.resolve('src/content');
-const COLLECTIONS = ['notes', 'projects'];
+const COLLECTIONS = ['posts', 'projects'];
 
 export function slugify(s) {
   return s
@@ -58,7 +58,7 @@ export function buildIndex() {
       const id = rel.split('/').map(slugify).join('/');
       const title = readTitle(file) ?? path.basename(rel).replace(/[-_]+/g, ' ').replace(/^./, (c) => c.toUpperCase());
       const entry = { href: `/${col}/${id}/`, title };
-      // Later collections never override an earlier one (notes win over projects on a clash).
+      // Later collections never override an earlier one (posts win over projects on a clash).
       for (const key of [`${col}/${id}`, id, slugify(title), title.toLowerCase()]) {
         if (!byKey.has(key)) byKey.set(key, entry);
       }
@@ -83,7 +83,7 @@ export function resolveLink(target, heading) {
   else if (t.includes('/')) {
     const [dir, ...rest] = t.split('/');
     href = `/${slugify(dir)}/${slugify(rest.join('/'))}/`;
-  } else href = `/notes/${slugify(t)}/`;
+  } else href = `/posts/${slugify(t)}/`;
   return heading ? `${href}#${slugify(heading)}` : href;
 }
 

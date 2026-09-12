@@ -1,21 +1,20 @@
 ---
-title: Note title
+title: Post title
 description: Optional one-liner shown in lists and previews.
-date: 2026-01-01          # planted
-# updated: 2026-02-01     # last tended — bump this when you revise the note
+date: 2026-01-01          # published
+# updated: 2026-02-01     # bump this when you revise the post
 tags: [topic]
-# stage: seedling         # seedling | budding | evergreen
 draft: true               # remove (or set false) to publish
 ---
 
-Copy this file, rename it (the file name becomes the URL: `my-note.md` → `/notes/my-note/`),
+Copy this file, rename it (the file name becomes the URL: `my-post.md` → `/posts/my-post/`),
 and delete the leading underscore. Files starting with `_` are ignored.
 
 Obsidian syntax works as-is:
 
-- `[[Another note]]` → links to `/notes/another-note/`
+- `[[Another post]]` → links to `/posts/another-post/`
 - `[[projects/fourier-lab]]` → links to a project
-- `[[Another note|shown text]]`, `[[Another note#Heading]]`
+- `[[Another post|shown text]]`, `[[Another post#Heading]]`
 - `![[photo.png]]` → image next to this file, or in an `attachments/` folder here
 
 > [!note] Callouts

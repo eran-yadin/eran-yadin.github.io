@@ -1,19 +1,19 @@
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
-import { getNotes, tended, titleFromId } from '../lib/content';
+import { getPosts, tended, titleFromId } from '../lib/content';
 import { SITE } from '../site';
 
 export async function GET(context: APIContext) {
-  const notes = await getNotes();
+  const posts = await getPosts();
   return rss({
-    title: `${SITE.name} — notes`,
+    title: `${SITE.name} — posts`,
     description: SITE.description,
     site: context.site!,
-    items: notes.map((n) => ({
+    items: posts.map((n) => ({
       title: n.data.title ?? titleFromId(n.id),
       description: n.data.description,
       pubDate: tended(n),
-      link: `/notes/${n.id}/`,
+      link: `/posts/${n.id}/`,
       categories: n.data.tags,
     })),
   });
