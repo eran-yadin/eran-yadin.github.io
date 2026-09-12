@@ -5,59 +5,59 @@ date: 2026-08-29
 tags: [dsp, python, math]
 ---
 
-# basic
-we are going to talk about convolution in regard of N time stamps
-we can calcilate the convolution of 2 functions using simple tactic
-take one flip him
-take is N's relative to n
-and then Sigma them together
+# Basics
+We are going to talk about convolution in regard to N time stamps.
+We can calculate the convolution of 2 functions using a simple tactic:
+take one and flip it,
+take its N's relative to n,
+and then Sigma them together.
 
-# example
-in this example we see 2 u(n) function in convolution
+# Example
+In this example we see two u(n) functions in convolution.
 ![[convolution 1.png|422|422]]
-in the bottom you can see in green the result 
-red is h
-blue is x
-and right now they are not overlaying each other
-so the result is 0
+At the bottom you can see the result in green:
+red is h,
+blue is x,
+and right now they are not overlapping each other,
+so the result is 0.
 ![[convolution 2.png|454|454]]
-now we are in the middle of the overlay process
-so the more we move the h the more we get in the result because there are more part to sum in the Sigma
+Now we are in the middle of the overlap process,
+so the more we move the h, the more we get in the result, because there are more parts to sum in the Sigma.
 ![[convolution 3.png|407|454x244]]
-now we are fully inside (the h is inside the x) and there for there is no change
+Now we are fully inside (the h is inside the x), and therefore there is no change.
 ![[convolution 4.png|409|453x243]]
-and here is the result
-# why
-but why do we need it
-of course we can know the result if we have one convolution. bla bla 
-we are not asking this
-i want to know what the fuck can i do with it
-smoothing
-like blurring image, in photoshop
-we can smooth or blur a signal
-filtering out weird sounds
+And here is the result.
+# Why
+But why do we need it?
+Of course we can get the result if we have one convolution. Bla bla.
+But that's not what we are asking.
+I want to know what the fuck I can do with it.
+Smoothing.
+Like blurring an image in Photoshop.
+We can smooth or blur a signal,
+filtering out weird sounds.
 
-# example
-here i create a simple function to smooth noise from a signal
+# Example
+Here I created a simple function to smooth noise from a signal.
 ![[convolution 5.png|697|697]]
-here we can see:
-blue - x: is the noise
-red - h: is the smoother
-the bigger the h the more smooth
-green is the result
-here is with h = 5
+Here we can see:
+blue — x: the noise,
+red — h: the smoother,
+the bigger the h, the smoother the result,
+green — the result.
+Here it is with h = 5:
 ![[convolution 6.png]]
-and here is with h = 40
+And here with h = 40:
 ![[convolution 7.png]]
-what we are doing in hear is basic filtering and smoothing sound in the most dumb way. if you want to actually filter high or low pitch take a look Fourier filter.
+What we are doing here is basic filtering and smoothing of sound in the most dumb way. If you want to actually filter high or low pitch, take a look at the Fourier filter:
 https://en.wikipedia.org/wiki/Discrete_Fourier_transform
-in the most basic: turn signal to separated frequencies choose which one fall less and which one get boosted. 
-we can also talk on unwanted filtering because of analog to digital translation and so on. 
-which is smoothing ill do in an other note.
-you want little mind fuck take a look on [sinc](https://en.wikipedia.org/wiki/Sinc_function) function in the [fft](https://en.wikipedia.org/wiki/Fast_Fourier_transform) 
-# code
-here is the code:
-## part 1
+In the most basic terms: turn the signal into separate frequencies, then choose which ones get cut and which ones get boosted.
+We can also talk about unwanted filtering caused by analog-to-digital translation and so on,
+which is something I'll do in another note.
+If you want a little mind-fuck, take a look at the [sinc](https://en.wikipedia.org/wiki/Sinc_function) function in the [FFT](https://en.wikipedia.org/wiki/Fast_Fourier_transform).
+# Code
+Here is the code:
+## Part 1
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -129,7 +129,7 @@ update(n_vals[0]) # אתחול המצב הראשון
   
 plt.show()
 ```
-## part 2
+## Part 2
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -203,7 +203,7 @@ update(n_vals[0]) # אתחול המצב הראשון
   
 plt.show()
 ```
-## if you having trouble
+## If you're having trouble
 ```python
 import subprocess, sys
   
@@ -215,7 +215,7 @@ packages = [
 subprocess.check_call([sys.executable, "-m", "pip", "install"] + packages)
 print("\nAll done. Run: python conv_with_N.py")
 ```
-## explanation 
+## Explanation
 ### conv_with_N.py
 Interactive visualization of discrete convolution: a noisy signal `x[k]` convolved with a moving-average window `h[n-k]`.
 #### Run
