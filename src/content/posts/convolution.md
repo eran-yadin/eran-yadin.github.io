@@ -28,7 +28,7 @@ now we are fully inside (the h is inside the x) and there for there is no change
 ![[convolution 4.png|409|453x243]]
 and here is the result
 # why
-we do we need it
+but why do we need it
 of course we can know the result if we have one convolution. bla bla 
 we are not asking this
 i want to know what the fuck can i do with it
